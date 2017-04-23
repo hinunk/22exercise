@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>mouse-move</title>
+    <style>
+        .container {
+            height: 100vh;
+        }
+        
+        #wrap {
+            background: rgb(0, 175, 254);
+            box-shadow: 3px 3px 18px black;
+            border-radius: 3%;
+            padding: 60px;
+            perspective: 1000px;
+        }
+        
+        #banner {
+            box-shadow: inset 0px 0px 13px hsla(0, 10%, 5%, 0.5);
+            border: 1px solid;
+            height: 275px;
+            background: rgb(0, 175, 254);
+            transform: transform 1s;
+            transform: translateZ(-70px) rotateX(0deg) rotateY(0deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="wrap">
+            <div id="banner"></div>
+        </div>
+    </div>
+
+    <script>
+        var wp = document.getElementById('wrap')
+        wp.addEventListener('mousemove', function (e) {
+            //wrap边框内鼠标位置
+            let wpLeft = e.clientX - wp.offsetLeft
+            let wpTop = e.clientY - wp.offsetTop
+            //获取 wrap 高度 宽度 
+            let wpWidth = wp.getBoundingClientRect().width
+            let wpheight = wp.getBoundingClientRect().height
+            //获取中心 wrap 位置  
+            let wpXcenter = wp.offsetLeft + wpWidth / 2
+            let wpYcenter = wp.offsetTop + wpheight / 2
+            //鼠标距离wrap中心的位置 
+            let mouseX = e.clientX - wpXcenter
+            let mouseY = e.clientY - wpYcenter
+            //距离位置
+            let distance = Math.sqrt(mouseX * mouseX + mouseY * mouseY)
+            //中心点到斜角边最大的距离,除以2是中心与斜角边的距离
+            let maxDistance = Math.sqrt(wpWidth * wpWidth + wpheight * wpheight) / 2
+            //中心到斜角边的百分比距离
+            /* let Xpercent = mouseX / (wpWidth / 2)
+               let Ypercent = mouseY / (wpheight / 2) */
+            let Xpercent = mouseX / maxDistance
+            let Ypercent = mouseY / maxDistance
+            //rotate的Deg值
+            let xDeg = Xpercent * 5
+            let yDeg = Ypercent * 15
+            banner.style.transform = `translateZ(-70px) rotateX(${-yDeg}deg) rotateY(${xDeg}deg)`
+
+            console.log(xDeg, yDeg)
+        })
+    </script>
+</body>
+
+</html>

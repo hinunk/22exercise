@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>eye</title>
+    <style>
+        * {
+            margin: 0;
+        }
+        
+        #container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: black;
+        }
+        
+        #eye {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgb(255, 255, 191);
+            transform-style: preserve-3d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: rotateX(0deg) rotateY(0deg);
+        }
+        
+        .eyeball:nth-child(1) {
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(to bottom right, rgb(129, 160, 215), white);
+            transform: translateZ(150px);
+        }
+        
+        .eyeball:nth-child(2) {
+            background: black;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            position: absolute;
+            transform: translateZ(175px);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="eye">
+            <div class="eyeball"></div>
+            <div class="eyeball"></div>
+            <div class="eyeball"></div>
+        </div>
+    </div>
+
+    <script>
+        var ctr = document.getElementById('container')
+        ctr.addEventListener('mousemove', function (e) {
+            //container的宽和高
+            let ctWidth = ctr.getBoundingClientRect().width
+            let ctHeight = ctr.getBoundingClientRect().height
+
+            //中心位置
+            let Xcenter = ctr.offsetLeft + ctWidth / 2
+            let Ycenter = ctr.offsetTop + ctHeight / 2
+
+            //mouse距离中心位置
+            let mouseX = e.clientX - Xcenter
+            let mouseY = e.clientY - Ycenter
+
+            //百分比距离
+            let Xpercent = mouseX / (ctWidth / 2)
+            let Ypercent = mouseY / (ctHeight / 2)
+
+            //rotate的Deg值
+            let xDeg = Xpercent * 20
+            let yDeg = Ypercent * 20
+            //
+
+            eye.style.transform = `rotateX(${-yDeg}deg) rotateY(${xDeg}deg)`
+
+        })
+    </script>
+</body>
+
+</html>
